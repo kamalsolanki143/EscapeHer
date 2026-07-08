@@ -7,7 +7,13 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "EscapeHer — AI-Assisted Women's Safety App",
+  description:
+    "One tap activates a persistent emergency session — live GPS, Heartbeat Protocol, trusted contact alerts, and an escape assistant. Be protected before you need it.",
+};
+
+export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-black font-sans text-white antialiased selection:bg-red-500 selection:text-white">
       {/* Header / Navbar placeholder or direct overlay */}

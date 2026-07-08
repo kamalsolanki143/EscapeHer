@@ -1,22 +1,38 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Manrope, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import ThemeProvider from "@/components/providers/ThemeProvider";
+import QueryProvider from "@/components/providers/QueryProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/* ─── Fonts ────────────────────────────────────────────────────────────────── */
+const manrope = Manrope({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+});
+
+/* ─── Metadata ─────────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
   title: "EscapeHer - AI-Assisted Women's Emergency Safety Net",
   description: "Advanced emergency safety net utilizing real-time AI routing, voice Sentinel keywords, dynamic stealth modes, and verified guardian dispatch networks.",
 };
 
+/* ─── Root Layout ──────────────────────────────────────────────────────────── */
 export default function RootLayout({
   children,
 }: Readonly<{
