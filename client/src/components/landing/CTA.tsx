@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { AlertOctagon, ShieldAlert } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function CTA() {
   return (
@@ -36,24 +37,24 @@ export default function CTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
-              <Link href="/danger-mode" passHref legacyBehavior>
-                <Button
-                  variant="default"
-                  size="lg"
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold h-14 px-8 rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all"
-                >
-                  <AlertOctagon className="size-5" />
-                  LAUNCH DANGER MODE NOW
-                </Button>
+              <Link
+                href="/danger-mode"
+                className={cn(
+                  buttonVariants({ variant: "default", size: "lg" }),
+                  "bg-red-600 hover:bg-red-700 text-white font-bold h-14 px-8 rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all"
+                )}
+              >
+                <AlertOctagon className="size-5" />
+                LAUNCH DANGER MODE NOW
               </Link>
-              <Link href="/emergency" passHref legacyBehavior>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-zinc-800 bg-zinc-950/40 text-zinc-300 hover:text-white hover:bg-zinc-900 h-14 px-8 rounded-xl"
-                >
-                  Emergency Contact List
-                </Button>
+              <Link
+                href="/emergency"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "border-zinc-800 bg-zinc-950/40 text-zinc-300 hover:text-white hover:bg-zinc-900 h-14 px-8 rounded-xl"
+                )}
+              >
+                Emergency Contact List
               </Link>
             </div>
           </div>

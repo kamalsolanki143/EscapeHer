@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { ShieldAlert, ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Hero() {
   const containerVariants: Variants = {
@@ -85,30 +86,30 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mb-16"
           >
-            <Link href="/danger-mode" passHref legacyBehavior>
-              <Button
-                variant="default"
-                size="lg"
-                className="relative bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold h-14 px-8 rounded-xl shadow-[0_0_25px_rgba(239,68,68,0.3)] hover:shadow-[0_0_35px_rgba(239,68,68,0.5)] border-0 flex items-center justify-center gap-3 transition-all duration-300"
-              >
-                <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 hover:opacity-100 transition-opacity" />
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-                </span>
-                ACTIVATE DANGER MODE
-              </Button>
+            <Link
+              href="/danger-mode"
+              className={cn(
+                buttonVariants({ variant: "default", size: "lg" }),
+                "relative bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold h-14 px-8 rounded-xl shadow-[0_0_25px_rgba(239,68,68,0.3)] hover:shadow-[0_0_35px_rgba(239,68,68,0.5)] border-0 flex items-center justify-center gap-3 transition-all duration-300"
+              )}
+            >
+              <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 hover:opacity-100 transition-opacity" />
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+              </span>
+              ACTIVATE DANGER MODE
             </Link>
 
-            <Link href="/dashboard" passHref legacyBehavior>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-zinc-800 bg-zinc-950/60 backdrop-blur-md text-zinc-100 hover:text-white hover:bg-zinc-900/80 hover:border-zinc-700 h-14 px-8 rounded-xl flex items-center justify-center gap-2"
-              >
-                Enter Dashboard
-                <ArrowRight className="size-4" />
-              </Button>
+            <Link
+              href="/dashboard"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "border-zinc-800 bg-zinc-950/60 backdrop-blur-md text-zinc-100 hover:text-white hover:bg-zinc-900/80 hover:border-zinc-700 h-14 px-8 rounded-xl flex items-center justify-center gap-2"
+              )}
+            >
+              Enter Dashboard
+              <ArrowRight className="size-4" />
             </Link>
           </motion.div>
 

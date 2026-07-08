@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Shield, Map, MessageSquareAlert, Mic, Eye, Users } from "lucide-react";
+import { Shield, Map, MessageSquareWarning, Mic, Eye, Users } from "lucide-react";
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -58,7 +58,7 @@ export default function Features() {
       delay: 0.3,
     },
     {
-      icon: <MessageSquareAlert className="size-6" />,
+      icon: <MessageSquareWarning className="size-6" />,
       title: "Stealth UI Layout",
       description: "Quick-switch mask interface instantly changes the app layout to look like a generic calculator, utility, or news application in seconds.",
       delay: 0.4,

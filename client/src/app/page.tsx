@@ -7,11 +7,7 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
 
-export const metadata: Metadata = {
-  title: "EscapeHer — AI-Assisted Women's Safety App",
-  description:
-    "One tap activates a persistent emergency session — live GPS, Heartbeat Protocol, trusted contact alerts, and an escape assistant. Be protected before you need it.",
-};
+
 
 export default function LandingPage() {
   return (
@@ -31,8 +27,8 @@ export default function LandingPage() {
             <a href="/dashboard" className="text-sm font-semibold text-zinc-400 hover:text-white transition-colors">
               Dashboard
             </a>
-            <a 
-              href="/danger-mode" 
+            <a
+              href="/danger-mode"
               className="text-xs font-bold px-3 py-1.5 rounded-md border border-red-500/30 bg-red-950/20 text-red-400 hover:bg-red-900/30 transition-all uppercase tracking-wider"
             >
               Danger Mode
