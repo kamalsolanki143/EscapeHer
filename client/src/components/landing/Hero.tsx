@@ -2,104 +2,159 @@
 
 import React from "react";
 import Link from "next/link";
-import { ShieldAlert, ArrowRight } from "lucide-react";
-import Logo from "@/components/common/Logo";
+import { motion, Variants } from "framer-motion";
+import { ShieldAlert, ArrowRight, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Hero() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 100, damping: 15 },
+    },
+  };
+
+  const alertRingVariants: Variants = {
+    animate: {
+      scale: [1, 1.3, 1.6, 1.3, 1],
+      opacity: [0.1, 0.4, 0, 0.4, 0.1],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
-    <section
-      className="relative flex flex-col items-center justify-center min-h-[90dvh] px-6 py-20 text-center overflow-hidden"
-      aria-labelledby="hero-heading"
-    >
-      {/* Background gradient */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, var(--eh-teal-100) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-black py-20 px-4">
+      {/* Decorative Gradients */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(239,68,68,0.1),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(220,38,38,0.08),transparent_50%)]" />
+      
+      {/* Mesh Grid Pattern Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
-      {/* Logo */}
-      <div className="relative mb-10">
-        <Logo variant="full" size="lg" />
+      <div className="container max-w-6xl mx-auto relative z-10">
+        <motion.div
+          className="text-center flex flex-col items-center justify-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Badge */}
+          <motion.div 
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/30 bg-red-950/20 backdrop-blur-md text-red-400 text-xs font-semibold tracking-wider uppercase mb-8"
+          >
+            <Sparkles className="size-3.5 text-red-500 animate-pulse" />
+            AI-Assisted Emergency Response
+          </motion.div>
+
+          {/* Heading */}
+          <motion.h1
+            variants={itemVariants}
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.1] mb-6"
+          >
+            Empowering Women to <span className="bg-gradient-to-r from-red-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">Escape & Evade</span> Danger Instantly
+          </motion.h1>
+
+          {/* Subheading */}
+          <motion.p
+            variants={itemVariants}
+            className="text-zinc-400 text-lg sm:text-xl max-w-2xl leading-relaxed mb-10"
+          >
+            EscapeHer utilizes state-of-the-art AI routing, real-time audio analysis, instant network broadcasting, and live escape mapping to deliver immediate response when seconds count.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mb-16"
+          >
+            <Link href="/danger-mode" passHref legacyBehavior>
+              <Button
+                variant="default"
+                size="lg"
+                className="relative bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold h-14 px-8 rounded-xl shadow-[0_0_25px_rgba(239,68,68,0.3)] hover:shadow-[0_0_35px_rgba(239,68,68,0.5)] border-0 flex items-center justify-center gap-3 transition-all duration-300"
+              >
+                <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 hover:opacity-100 transition-opacity" />
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                </span>
+                ACTIVATE DANGER MODE
+              </Button>
+            </Link>
+
+            <Link href="/dashboard" passHref legacyBehavior>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-zinc-800 bg-zinc-950/60 backdrop-blur-md text-zinc-100 hover:text-white hover:bg-zinc-900/80 hover:border-zinc-700 h-14 px-8 rounded-xl flex items-center justify-center gap-2"
+              >
+                Enter Dashboard
+                <ArrowRight className="size-4" />
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Quick Metrics/Indicators */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 border-t border-zinc-900 pt-10 w-full max-w-4xl"
+          >
+            <div className="flex flex-col items-center">
+              <span className="text-2xl sm:text-3xl font-extrabold text-white">0.4s</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Alert dispatch</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl sm:text-3xl font-extrabold text-white">100%</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-widest mt-1">End-to-End Encrypted</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl sm:text-3xl font-extrabold text-white">AI-Powered</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Escape Routing</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl sm:text-3xl font-extrabold text-white">Socket.IO</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Real-time Sync</span>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Badge */}
-      <div
-        className="relative inline-flex items-center gap-2 rounded-full px-4 py-2 mb-6 text-xs font-semibold uppercase tracking-wide"
-        style={{
-          background: "var(--eh-teal-100)",
-          color: "var(--eh-teal-700)",
-          border: "1px solid var(--eh-teal-100)",
-        }}
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full rounded-full animate-ping" style={{ background: "var(--eh-teal-500)", opacity: 0.5 }} />
-          <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "var(--eh-teal-500)" }} />
-        </span>
-        AI-Powered Women&apos;s Safety
-      </div>
-
-      {/* Headline */}
-      <h1
-        id="hero-heading"
-        className="relative text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] max-w-2xl"
-        style={{ color: "var(--eh-ink-900)", fontFamily: "var(--eh-font-display)" }}
-      >
-        Your safety,{" "}
-        <span style={{ color: "var(--eh-teal-500)" }}>persistent</span>
-        <br />
-        until you&apos;re home.
-      </h1>
-
-      {/* Sub */}
-      <p
-        className="relative mt-5 text-lg max-w-lg leading-relaxed"
-        style={{ color: "var(--eh-ink-600)" }}
-      >
-        One tap activates a full emergency session — live GPS, trusted contact alerts,
-        Heartbeat Protocol, and an escape assistant. No further action needed.
-      </p>
-
-      {/* CTAs */}
-      <div className="relative mt-10 flex flex-col sm:flex-row items-center gap-3">
-        <Link
-          href="/signup"
-          className="flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold transition-transform active:scale-[0.98]"
-          style={{ background: "var(--eh-teal-500)", color: "var(--eh-surface, #fff)" }}
-        >
-          Get started — it&apos;s free
-          <ArrowRight size={18} />
-        </Link>
-        <Link
-          href="/login"
-          className="flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-semibold transition-transform active:scale-[0.98]"
-          style={{
-            background: "var(--eh-surface, #fff)",
-            border: "1px solid var(--eh-mist-200)",
-            color: "var(--eh-ink-900)",
-          }}
-        >
-          Sign in
-        </Link>
-      </div>
-
-      {/* Danger mode teaser button */}
-      <div className="relative mt-8">
-        <Link
-          href="/danger-mode"
-          className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform active:scale-[0.98]"
-          style={{
-            background: "var(--eh-danger-100)",
-            color: "var(--eh-danger-600)",
-            border: "1px solid rgba(194,59,59,0.25)",
-          }}
-        >
-          <ShieldAlert size={16} />
-          Try Danger Mode (demo)
-        </Link>
+      {/* Floating Animated Emergency Pulse Elements */}
+      <div className="absolute right-10 bottom-10 hidden lg:block z-0 opacity-40">
+        <div className="relative flex items-center justify-center">
+          <motion.div
+            variants={alertRingVariants}
+            animate="animate"
+            className="absolute size-36 rounded-full border border-red-500/40 bg-red-500/5"
+          />
+          <motion.div
+            variants={alertRingVariants}
+            animate="animate"
+            transition={{ delay: 1 }}
+            className="absolute size-56 rounded-full border border-red-600/30 bg-transparent"
+          />
+          <div className="size-16 rounded-full bg-gradient-to-br from-red-600 to-rose-700 flex items-center justify-center shadow-lg shadow-red-900/50">
+            <ShieldAlert className="size-8 text-white animate-bounce" />
+          </div>
+        </div>
       </div>
     </section>
   );

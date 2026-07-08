@@ -1,96 +1,117 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { ShieldCheck, MapPin, Navigation, Radio } from "lucide-react";
 
-const STEPS = [
-  {
-    number: "01",
-    title: "Sense danger",
-    body: "Something feels wrong. You don't have time to figure out the right app menu.",
-  },
-  {
-    number: "02",
-    title: "Hold the SOS button",
-    body: "One hold. Danger Mode activates. GPS starts, audio records, trusted contacts are alerted — simultaneously.",
-  },
-  {
-    number: "03",
-    title: "Session runs in the background",
-    body: "EscapeHer keeps watching. The Escape Assistant shows only what you need: fake call, safe route, police, siren, I'm safe.",
-  },
-  {
-    number: "04",
-    title: "Heartbeat Protocol runs automatically",
-    body: "If you stop responding to check-ins, the alert escalates up your contact chain — Friend → Family → Emergency Contact.",
-  },
-  {
-    number: "05",
-    title: "Confirm you're safe",
-    body: "When you're home, tap 'I'm Safe'. The session ends, contacts are notified, and an AI evidence report is generated.",
-  },
-];
+interface StepProps {
+  number: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  index: number;
+}
 
-export default function HowItWorks() {
+function Step({ number, icon, title, description, index }: StepProps) {
+  const isEven = index % 2 === 0;
+
   return (
-    <section
-      className="px-4 py-20 max-w-2xl mx-auto"
-      aria-labelledby="how-it-works-heading"
+    <motion.div
+      initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, type: "spring" }}
+      className="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative"
     >
-      <div className="text-center mb-12">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--eh-teal-500)" }}>
-          The Workflow
-        </p>
-        <h2
-          id="how-it-works-heading"
-          className="text-3xl sm:text-4xl font-extrabold"
-          style={{ color: "var(--eh-ink-900)", fontFamily: "var(--eh-font-display)" }}
-        >
-          From danger to safe,<br />step by step
-        </h2>
+      <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left order-2 md:order-1">
+        <span className="text-sm font-bold text-red-500 tracking-widest uppercase mb-2">
+          Step {number}
+        </span>
+        <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+        <p className="text-zinc-400 leading-relaxed max-w-lg">{description}</p>
       </div>
 
-      {/* Timeline steps */}
-      <ol className="relative space-y-0" aria-label="How EscapeHer works">
-        {STEPS.map((step, i) => {
-          const isLast = i === STEPS.length - 1;
-          return (
-            <li key={step.number} className="relative flex gap-5 pb-8 last:pb-0">
-              {/* Connector line */}
-              {!isLast && (
-                <span
-                  className="absolute left-[19px] top-10 bottom-0 w-px"
-                  style={{ background: "var(--eh-mist-200)" }}
-                  aria-hidden="true"
-                />
-              )}
+      <div className="relative flex items-center justify-center order-1 md:order-2">
+        <div className="absolute size-24 rounded-full bg-red-600/10 blur-xl pointer-events-none" />
+        <div className="size-20 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-red-500 z-10 relative">
+          {icon}
+          <div className="absolute -top-3 -right-3 size-8 rounded-full bg-red-600 flex items-center justify-center text-xs font-black text-white shadow-lg border-2 border-black">
+            {number}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
-              {/* Step number circle */}
-              <span
-                className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold"
-                style={{
-                  background: "var(--eh-teal-100)",
-                  color: "var(--eh-teal-700)",
-                  fontFamily: "var(--eh-font-display)",
-                }}
-              >
-                {step.number}
-              </span>
+export default function HowItWorks() {
+  const steps = [
+    {
+      number: "01",
+      icon: <Radio className="size-8" />,
+      title: "Activate Sentinel System",
+      description: "Log into the app and keep it on alert. Use the Stealth mode configuration if you need the application window to look hidden or disguised as a system widget.",
+    },
+    {
+      number: "02",
+      icon: <MapPin className="size-8" />,
+      title: "Trigger Alert",
+      description: "In case of emergency, squeeze your phone, scream the personalized voice-trigger keywords, or press the red SOS trigger button once to start immediate broadcasting.",
+    },
+    {
+      number: "03",
+      icon: <Navigation className="size-8" />,
+      title: "AI Escape Guideline & Dispatch",
+      description: "Our backend updates emergency responders instantly via WebSockets while generating a secure real-time navigation overlay guiding you away from dangerous zones.",
+    },
+    {
+      number: "04",
+      icon: <ShieldCheck className="size-8" />,
+      title: "Safe Evacuation & Check-in",
+      description: "Once safe, enter your emergency PIN to resolve the alert. A dynamic check-in sequence updates your contacts to confirm your safety status.",
+    },
+  ];
 
-              <div className="pt-2 pb-4">
-                <h3
-                  className="text-base font-bold"
-                  style={{ color: "var(--eh-ink-900)", fontFamily: "var(--eh-font-display)" }}
-                >
-                  {step.title}
-                </h3>
-                <p className="text-sm mt-1.5 leading-relaxed" style={{ color: "var(--eh-ink-600)" }}>
-                  {step.body}
-                </p>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
+  return (
+    <section className="py-24 bg-black relative border-t border-zinc-900 px-4">
+      {/* Visual Connector Line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-zinc-800 to-transparent hidden md:block" />
+
+      <div className="container max-w-4xl mx-auto relative z-10">
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4"
+          >
+            How EscapeHer Works
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-zinc-400 text-lg"
+          >
+            Four simplified stages built on rapid fail-safe actions.
+          </motion.p>
+        </div>
+
+        <div className="flex flex-col gap-20">
+          {steps.map((step, index) => (
+            <Step
+              key={index}
+              number={step.number}
+              icon={step.icon}
+              title={step.title}
+              description={step.description}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

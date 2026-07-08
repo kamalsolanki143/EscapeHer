@@ -2,69 +2,62 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Shield } from "lucide-react";
+import { motion } from "framer-motion";
+import { AlertOctagon, ShieldAlert } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function CTA() {
   return (
-    <section
-      className="px-4 py-20 max-w-3xl mx-auto"
-      aria-labelledby="cta-heading"
-    >
-      <div
-        className="rounded-3xl px-8 py-14 text-center relative overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, var(--eh-teal-900) 0%, var(--eh-teal-700) 100%)",
-        }}
-      >
-        {/* Background decoration */}
-        <div
-          className="pointer-events-none absolute top-0 right-0 w-64 h-64 rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)",
-            transform: "translate(30%, -30%)",
-          }}
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute bottom-0 left-0 w-48 h-48 rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
-            transform: "translate(-30%, 30%)",
-          }}
-          aria-hidden="true"
-        />
+    <section className="py-24 bg-black relative px-4 border-t border-zinc-900">
+      {/* Visual background gradient glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.1),transparent_70%)] pointer-events-none" />
 
-        <Shield size={40} color="rgba(255,255,255,0.3)" className="mx-auto mb-5" />
-
-        <h2
-          id="cta-heading"
-          className="text-3xl sm:text-4xl font-extrabold text-white max-w-lg mx-auto"
-          style={{ fontFamily: "var(--eh-font-display)" }}
+      <div className="container max-w-4xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, type: "spring" }}
+          className="rounded-3xl bg-gradient-to-b from-zinc-900 to-black border border-zinc-800 p-8 sm:p-16 text-center relative overflow-hidden"
         >
-          Be protected before you need it.
-        </h2>
-        <p className="mt-4 text-base max-w-md mx-auto" style={{ color: "rgba(255,255,255,0.75)" }}>
-          Set up EscapeHer in under two minutes. Add your trusted contacts, and you&apos;re protected — 24/7.
-        </p>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/5 rounded-full filter blur-[60px]" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-600/5 rounded-full filter blur-[60px]" />
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link
-            href="/signup"
-            className="flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold transition-transform active:scale-[0.98]"
-            style={{ background: "var(--eh-surface, #fff)", color: "var(--eh-teal-700)" }}
-          >
-            Create your account
-            <ArrowRight size={18} />
-          </Link>
-          <Link
-            href="/login"
-            className="flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-semibold transition-colors active:scale-[0.98]"
-            style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.25)" }}
-          >
-            Already have one? Sign in
-          </Link>
-        </div>
+          <div className="relative z-10 flex flex-col items-center">
+            <div className="size-16 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500 mb-8 animate-pulse">
+              <ShieldAlert className="size-8" />
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-6 max-w-2xl leading-tight">
+              Seconds Save Lives. Be Prepared.
+            </h2>
+            <p className="text-zinc-400 text-lg mb-10 max-w-xl">
+              Enable instant AI protection. Get real-time updates and trigger safeguards immediately when danger looms.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
+              <Link href="/danger-mode" passHref legacyBehavior>
+                <Button
+                  variant="default"
+                  size="lg"
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold h-14 px-8 rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all"
+                >
+                  <AlertOctagon className="size-5" />
+                  LAUNCH DANGER MODE NOW
+                </Button>
+              </Link>
+              <Link href="/emergency" passHref legacyBehavior>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-zinc-800 bg-zinc-950/40 text-zinc-300 hover:text-white hover:bg-zinc-900 h-14 px-8 rounded-xl"
+                >
+                  Emergency Contact List
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,110 +1,120 @@
 "use client";
 
 import React from "react";
-import { Heart, MapPin, Mic, Shield, Navigation, Radio } from "lucide-react";
+import { motion } from "framer-motion";
+import { Shield, Map, MessageSquareAlert, Mic, Eye, Users } from "lucide-react";
 
-const FEATURES = [
-  {
-    icon: Shield,
-    title: "Danger Mode",
-    description:
-      "One tap launches a full emergency session — no second steps, no menus. Works even when you're shaking.",
-    accent: "var(--eh-teal-500)",
-    bg: "var(--eh-teal-100)",
-  },
-  {
-    icon: Heart,
-    title: "Heartbeat Protocol",
-    description:
-      "EscapeHer checks in with you periodically. Miss a check-in and it automatically alerts the next contact in your chain.",
-    accent: "var(--eh-spark-500)",
-    bg: "var(--eh-spark-200)",
-  },
-  {
-    icon: MapPin,
-    title: "Live GPS Tracking",
-    description:
-      "Continuous real-time location sharing — not a single ping. Trusted contacts see your position update every few seconds.",
-    accent: "var(--eh-teal-700)",
-    bg: "var(--eh-teal-100)",
-  },
-  {
-    icon: Navigation,
-    title: "Smart Safe Route",
-    description:
-      "Routes you to the nearest police station, hospital, or crowded public space — not just the shortest path.",
-    accent: "var(--eh-blue-600)",
-    bg: "var(--eh-blue-300)",
-  },
-  {
-    icon: Mic,
-    title: "Audio Evidence",
-    description:
-      "Records audio from the moment Danger Mode starts. AI generates a structured evidence summary afterwards.",
-    accent: "var(--eh-teal-500)",
-    bg: "var(--eh-teal-100)",
-  },
-  {
-    icon: Radio,
-    title: "Low-Connectivity Mode",
-    description:
-      "GPS and audio are cached locally when you lose signal and synced automatically the moment connectivity returns.",
-    accent: "var(--eh-safe-600)",
-    bg: "var(--eh-safe-100)",
-  },
-];
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  delay: number;
+}
 
-export default function Features() {
+function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
   return (
-    <section
-      className="px-4 py-20 max-w-5xl mx-auto"
-      aria-labelledby="features-heading"
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5, delay, type: "spring", stiffness: 100 }}
+      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+      className="relative group p-6 rounded-2xl bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800/80 transition-all duration-300 backdrop-blur-md overflow-hidden"
     >
-      <div className="text-center mb-12">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--eh-teal-500)" }}>
-          Why EscapeHer
-        </p>
-        <h2
-          id="features-heading"
-          className="text-3xl sm:text-4xl font-extrabold"
-          style={{ color: "var(--eh-ink-900)", fontFamily: "var(--eh-font-display)" }}
-        >
-          Built for the moment<br />that matters most
-        </h2>
-        <p className="mt-4 text-base max-w-xl mx-auto" style={{ color: "var(--eh-ink-600)" }}>
-          Most safety apps send one SOS and stop. EscapeHer keeps protecting you through a persistent session until you confirm you're safe.
+      <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="relative z-10">
+        <div className="size-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-red-500 group-hover:scale-110 group-hover:bg-red-500/10 group-hover:text-red-400 transition-all duration-300 mb-5">
+          {icon}
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-red-400 transition-colors">
+          {title}
+        </h3>
+        <p className="text-zinc-400 text-sm leading-relaxed">
+          {description}
         </p>
       </div>
+    </motion.div>
+  );
+}
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {FEATURES.map(({ icon: Icon, title, description, accent, bg }) => (
-          <div
-            key={title}
-            className="rounded-2xl p-5 flex flex-col gap-4 transition-transform hover:scale-[1.01]"
-            style={{
-              background: "var(--eh-surface, #fff)",
-              border: "1px solid var(--eh-mist-200)",
-            }}
+export default function Features() {
+  const featuresList = [
+    {
+      icon: <Shield className="size-6" />,
+      title: "One-Tap SOS Broadcast",
+      description: "Instantly broadcast your live location, audio feed, and details to your trusted emergency contacts and active guardians in your vicinity.",
+      delay: 0.1,
+    },
+    {
+      icon: <Map className="size-6" />,
+      title: "AI Escape Routing",
+      description: "Real-time, dynamic route mapping. Generates paths to safe zones, well-lit public spaces, or police stations using active maps.",
+      delay: 0.2,
+    },
+    {
+      icon: <Mic className="size-6" />,
+      title: "AI Audio Sentinel",
+      description: "Continuous real-time voice analysis monitors for trigger keywords or signs of physical distress to invoke emergency protocols hands-free.",
+      delay: 0.3,
+    },
+    {
+      icon: <MessageSquareAlert className="size-6" />,
+      title: "Stealth UI Layout",
+      description: "Quick-switch mask interface instantly changes the app layout to look like a generic calculator, utility, or news application in seconds.",
+      delay: 0.4,
+    },
+    {
+      icon: <Users className="size-6" />,
+      title: "Local Guardian Net",
+      description: "Connect automatically with verified nearby volunteers and female safety units who can rush to assist when official services are far.",
+      delay: 0.5,
+    },
+    {
+      icon: <Eye className="size-6" />,
+      title: "Socket.IO Live Sync",
+      description: "Keeps a persistent, lag-free connection with dashboard monitors, sharing telemetry data, battery levels, and ambient threat indexes.",
+      delay: 0.6,
+    },
+  ];
+
+  return (
+    <section className="py-24 bg-black relative overflow-hidden px-4">
+      {/* Decorative Blur BG */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-red-600/5 rounded-full filter blur-[120px] pointer-events-none" />
+
+      <div className="container max-w-6xl mx-auto relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4"
           >
-            <span
-              className="flex h-11 w-11 items-center justify-center rounded-full"
-              style={{ background: bg }}
-            >
-              <Icon size={20} color={accent} />
-            </span>
-            <div>
-              <h3
-                className="text-base font-bold"
-                style={{ color: "var(--eh-ink-900)", fontFamily: "var(--eh-font-display)" }}
-              >
-                {title}
-              </h3>
-              <p className="text-sm mt-1.5 leading-relaxed" style={{ color: "var(--eh-ink-600)" }}>
-                {description}
-              </p>
-            </div>
-          </div>
-        ))}
+            Built to Protect, Designed to Save
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-zinc-400 text-lg"
+          >
+            Leveraging modern edge technologies to provide an bulletproof lifeline when every second counts.
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuresList.map((feature, index) => (
+            <FeatureCard
+              key={index}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+              delay={feature.delay}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

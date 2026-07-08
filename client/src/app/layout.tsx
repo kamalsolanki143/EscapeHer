@@ -28,36 +28,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 /* ─── Metadata ─────────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: {
-    default: "EscapeHer — AI-Assisted Women's Safety App",
-    template: "%s | EscapeHer",
-  },
-  description:
-    "EscapeHer keeps protecting you through a persistent emergency session until you are confirmed safe. One-tap SOS, live GPS, Heartbeat Protocol, and trusted contact alerts.",
-  keywords: [
-    "women safety",
-    "emergency alert",
-    "SOS app",
-    "personal safety",
-    "escape route",
-    "trusted contacts",
-    "heartbeat protocol",
-  ],
-  authors: [{ name: "EscapeHer Team" }],
-  robots: "index, follow",
-  openGraph: {
-    type: "website",
-    title: "EscapeHer — AI-Assisted Women's Safety App",
-    description:
-      "Persistent emergency sessions, live GPS, Heartbeat Protocol, and smart safe routes.",
-    siteName: "EscapeHer",
-  },
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#159A8D",
+  title: "EscapeHer - AI-Assisted Women's Emergency Safety Net",
+  description: "Advanced emergency safety net utilizing real-time AI routing, voice Sentinel keywords, dynamic stealth modes, and verified guardian dispatch networks.",
 };
 
 /* ─── Root Layout ──────────────────────────────────────────────────────────── */
@@ -69,16 +41,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${inter.variable} ${ibmPlexMono.variable}`}
-      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body>
-        <ThemeProvider
-          fontSans={`var(--font-inter, 'Inter', system-ui, sans-serif)`}
-          fontMono={`var(--font-ibm-plex-mono, 'IBM Plex Mono', ui-monospace, monospace)`}
-        >
-          <QueryProvider>{children}</QueryProvider>
-        </ThemeProvider>
+      <body className="min-h-full flex flex-col bg-black text-zinc-100 font-sans selection:bg-rose-500 selection:text-white">
+        {children}
       </body>
     </html>
   );
