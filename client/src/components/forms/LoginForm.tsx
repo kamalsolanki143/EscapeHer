@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/authStub";
-// TODO: replace with Kamal's real useAuth
+import { useAuth } from "@/hooks/useAuth";
 
 interface LoginFormProps {
   onSuccess?: () => void;
@@ -25,7 +24,11 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     setLoading(true);
     try {
       await signIn(email, password);
-      onSuccess ? onSuccess() : router.push("/dashboard");
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Sign-in failed. Please try again.");
     } finally {

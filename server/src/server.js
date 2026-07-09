@@ -1,21 +1,46 @@
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
+const dns = require('dns');
+const logger = require('./utils/logger');
+
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (dnsErr) {
+  logger.warn('Failed to set public DNS servers, using system default:', dnsErr.message);
+}
+
 const mongoose = require('mongoose');
 const http = require('http');
 const app = require('./app');
 const { initSocket } = require('./services/socket.service');
-const logger = require('./utils/logger');
 
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/escapeher';
 
 async function connectDatabase() {
+  const localFallback = 'mongodb://127.0.0.1:27017/escapeher';
   try {
-    await mongoose.connect(MONGODB_URI);
+    logger.info('Connecting to MongoDB...');
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+    });
     logger.info('Connected to MongoDB');
   } catch (err) {
-    logger.error('MongoDB connection failed:', err.message);
-    process.exit(1);
+    logger.error('MongoDB Atlas connection failed:', err.message);
+    if (MONGODB_URI !== localFallback) {
+      logger.info(`Attempting fallback to local MongoDB: ${localFallback}`);
+      try {
+        await mongoose.connect(localFallback, {
+          serverSelectionTimeoutMS: 5000,
+        });
+        logger.info('Connected to local MongoDB');
+      } catch (fallbackErr) {
+        logger.error('Local MongoDB connection also failed:', fallbackErr.message);
+        process.exit(1);
+      }
+    } else {
+      process.exit(1);
+    }
   }
 }
 

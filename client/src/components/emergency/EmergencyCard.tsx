@@ -36,6 +36,12 @@ export default function EmergencyCard({
   isRecording,
   className = "",
 }: EmergencyCardProps) {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div
       className={`rounded-2xl overflow-hidden ${className}`}
@@ -46,6 +52,7 @@ export default function EmergencyCard({
       role="status"
       aria-label="Active emergency session status"
       aria-live="polite"
+      data-prev-mounted={mounted ? "true" : "false"}
     >
       {/* Header bar */}
       <div
@@ -144,7 +151,7 @@ export default function EmergencyCard({
             opacity: 0.7,
           }}
         >
-          Session ID: {sessionId} · Started: {startedAt.toLocaleTimeString()}
+          Session ID: {sessionId} · Started: {mounted ? startedAt.toLocaleTimeString() : ""}
         </p>
       </div>
     </div>

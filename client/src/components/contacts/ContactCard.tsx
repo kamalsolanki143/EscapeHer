@@ -48,61 +48,62 @@ export default function ContactCard({
 
   return (
     <div
-      className={`flex items-center gap-3 rounded-2xl p-3 ${className}`}
-      style={{ background: "var(--eh-surface, #fff)", border: "1px solid var(--eh-mist-200)" }}
+      className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 rounded-2xl p-4 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] hover:border-[var(--eh-teal-500)]/25 hover:shadow-sm transition-all duration-300 ${className}`}
     >
-      {avatarUrl ? (
-        <img src={avatarUrl} alt="" className="h-11 w-11 rounded-full object-cover shrink-0" />
-      ) : (
-        <span
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
-          style={{ background: "var(--eh-teal-100)", color: "var(--eh-teal-700)" }}
-        >
-          {initials(name)}
-        </span>
-      )}
-
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold truncate" style={{ color: "var(--eh-ink-900)" }}>
-            {name}
-          </p>
+      <div className="flex items-center gap-4 w-full sm:w-auto flex-1 min-w-0">
+        {avatarUrl ? (
+          <img src={avatarUrl} alt="" className="h-12 w-12 rounded-full object-cover shrink-0 ring-2 ring-[var(--eh-teal-100)]" />
+        ) : (
           <span
-            className="text-[10px] font-medium px-1.5 py-0.5 rounded-full shrink-0"
-            style={{ color: status.color, background: status.bg }}
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold shadow-inner"
+            style={{ background: "var(--eh-teal-100)", color: "var(--eh-teal-700)" }}
           >
-            {status.text}
+            {initials(name)}
           </span>
+        )}
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-bold truncate" style={{ color: "var(--eh-ink-900)" }}>
+              {name}
+            </p>
+            <span
+              className="text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 uppercase tracking-wide"
+              style={{ color: status.color, background: status.bg }}
+            >
+              {status.text}
+            </span>
+          </div>
+          <p className="text-xs truncate mt-0.5" style={{ color: "var(--eh-ink-600)" }}>
+            {relation} · {phone}
+          </p>
         </div>
-        <p className="text-xs truncate" style={{ color: "var(--eh-ink-600)" }}>
-          {relation} · {phone}
-        </p>
       </div>
 
-      <div className="flex items-center gap-1 shrink-0">
+      <div className="flex items-center justify-end gap-1.5 w-full sm:w-auto border-t border-[var(--eh-mist-200)] pt-2.5 sm:border-t-0 sm:pt-0 shrink-0">
         <button
           type="button"
           onClick={onCall}
           aria-label={`Call ${name}`}
-          className="p-2 rounded-full transition-colors hover:bg-[var(--eh-mist-50)]"
+          className="rounded-xl transition-all duration-200 hover:bg-[var(--eh-teal-100)] text-[var(--eh-teal-700)] active:scale-95 flex h-11 w-11 items-center justify-center"
         >
-          <Phone size={16} color="var(--eh-teal-700)" />
+          <Phone size={15} />
         </button>
         <button
           type="button"
           onClick={onMessage}
           aria-label={`Message ${name}`}
-          className="p-2 rounded-full transition-colors hover:bg-[var(--eh-mist-50)]"
+          className="rounded-xl transition-all duration-200 hover:bg-[var(--eh-teal-100)] text-[var(--eh-teal-700)] active:scale-95 flex h-11 w-11 items-center justify-center"
         >
-          <MessageCircle size={16} color="var(--eh-teal-700)" />
+          <MessageCircle size={15} />
         </button>
         <button
           type="button"
           onClick={onMore}
           aria-label={`More options for ${name}`}
-          className="p-2 rounded-full transition-colors hover:bg-[var(--eh-mist-50)]"
+          className="rounded-xl transition-all duration-200 hover:bg-[var(--eh-mist-50)] text-[var(--eh-ink-600)] active:scale-95 flex h-11 w-11 items-center justify-center"
         >
-          <MoreVertical size={16} color="var(--eh-ink-600)" />
+          <MoreVertical size={15} />
         </button>
       </div>
     </div>

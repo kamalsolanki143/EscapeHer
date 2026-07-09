@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Heart, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export type HeartbeatStatus = "monitoring" | "awaiting" | "missed" | "escalated" | "confirmed-safe";
 
@@ -89,18 +90,20 @@ export default function HeartbeatIndicator({
       <div className="relative flex items-center justify-center" style={{ width: dims.outer, height: dims.outer }}>
         {cfg.pulsing && (
           <>
-            <span
-              className="absolute inset-0 rounded-full animate-ping"
-              style={{ background: cfg.color, opacity: 0.18 }}
+            <motion.span
+              className="absolute inset-0 rounded-full"
+              style={{ background: cfg.color }}
+              animate={{ scale: [0.95, 1.45], opacity: [0.22, 0] }}
+              transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut" }}
             />
-            <span
-              className="absolute rounded-full animate-ping"
+            <motion.span
+              className="absolute rounded-full"
               style={{
                 inset: dims.outer * 0.12,
                 background: cfg.color,
-                opacity: 0.22,
-                animationDelay: "0.35s",
               }}
+              animate={{ scale: [0.95, 1.3], opacity: [0.26, 0] }}
+              transition={{ repeat: Infinity, duration: 2.2, delay: 0.7, ease: "easeOut" }}
             />
           </>
         )}
@@ -116,7 +119,19 @@ export default function HeartbeatIndicator({
             background: cfg.color,
           }}
         >
-          <Icon size={dims.icon} color="var(--eh-surface, #fff)" strokeWidth={2.25} />
+          <motion.div
+            animate={status === "monitoring" || status === "awaiting" ? {
+              scale: [1, 1.15, 1, 1.15, 1],
+            } : {}}
+            transition={status === "monitoring" || status === "awaiting" ? {
+              repeat: Infinity,
+              duration: 1.6,
+              ease: "easeInOut",
+              times: [0, 0.15, 0.3, 0.45, 1],
+            } : {}}
+          >
+            <Icon size={dims.icon} color="var(--eh-surface, #fff)" strokeWidth={2.25} />
+          </motion.div>
         </span>
       </div>
 

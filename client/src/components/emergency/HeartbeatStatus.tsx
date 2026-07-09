@@ -27,21 +27,21 @@ export default function HeartbeatStatus({
 
   return (
     <div
-      className={`rounded-2xl p-5 flex flex-col items-center gap-4 ${className}`}
-      style={{
-        background: isAlert ? "var(--eh-danger-100)" : "var(--eh-surface, #fff)",
-        border: `1px solid ${isAlert ? "var(--eh-danger-600)" : "var(--eh-mist-200)"}`,
-      }}
+      className={`rounded-3xl p-8 flex flex-col items-center gap-6 border transition-all duration-500 shadow-sm ${
+        isAlert
+          ? "border-[var(--eh-danger-600)] bg-[var(--eh-danger-100)]/20 shadow-[0_0_35px_rgba(226,114,114,0.15)]"
+          : "border-[var(--eh-mist-200)] bg-[var(--eh-surface)] hover:border-[var(--eh-teal-500)]/25"
+      } ${className}`}
     >
       <HeartbeatIndicator
         status={status}
         lastCheckInSeconds={lastCheckInSeconds}
         intervalSeconds={intervalSeconds}
-        size="md"
+        size="lg"
       />
       {isAlert && (
         <p
-          className="text-xs text-center font-medium"
+          className="text-xs text-center font-bold animate-pulse tracking-wide uppercase"
           style={{ color: "var(--eh-danger-600)" }}
         >
           Automatic escalation triggered — notifying next contact.

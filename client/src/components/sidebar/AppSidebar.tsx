@@ -55,19 +55,15 @@ export default function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
           fixed top-0 left-0 z-50 h-full w-64 flex flex-col
           transition-transform duration-200 ease-out
           lg:static lg:translate-x-0 lg:z-auto
+          border-r border-[var(--eh-mist-200)] bg-[var(--eh-surface)]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
-        style={{
-          background: "var(--eh-surface, #fff)",
-          borderRight: "1px solid var(--eh-mist-200)",
-        }}
       >
         {/* Logo + close */}
         <div
-          className="flex items-center justify-between px-5 py-5"
-          style={{ borderBottom: "1px solid var(--eh-mist-200)" }}
+          className="flex items-center justify-between px-5 py-5 border-b border-[var(--eh-mist-200)]"
         >
-          <Logo variant="full" size="md" />
+          <Logo variant="full" size="lg" className="h-9 w-auto" />
           <button
             type="button"
             onClick={onClose}
@@ -79,7 +75,7 @@ export default function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         </div>
 
         {/* Nav items */}
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+        <nav className="flex-1 overflow-y-auto px-3 py-6 space-y-2">
           {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
             const active = pathname === href || pathname.startsWith(href + "/");
             return (
@@ -88,27 +84,26 @@ export default function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
                 href={href}
                 onClick={onClose}
                 className={`
-                  flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium
-                  transition-colors active:scale-[0.98]
+                  flex items-center gap-3.5 px-4 py-3 text-sm font-semibold
+                  transition-all duration-200 active:scale-[0.97]
+                  ${active 
+                    ? "bg-[var(--eh-teal-100)] text-[var(--eh-teal-700)] border-l-4 border-red-500 rounded-r-xl rounded-l-none" 
+                    : "rounded-xl text-[var(--eh-ink-600)] hover:bg-[var(--eh-teal-100)]/15 hover:text-[var(--eh-teal-700)]"}
                 `}
-                style={{
-                  background: active ? "var(--eh-teal-100)" : "transparent",
-                  color: active ? "var(--eh-teal-700)" : "var(--eh-ink-600)",
-                }}
                 aria-current={active ? "page" : undefined}
               >
-                <Icon size={18} strokeWidth={active ? 2.25 : 1.75} />
-                {label}
+                <Icon size={18} strokeWidth={active ? 2.25 : 1.75} className="shrink-0" />
+                <span>{label}</span>
               </Link>
             );
           })}
         </nav>
 
         {/* Emergency button in sidebar */}
-        <div className="p-4" style={{ borderTop: "1px solid var(--eh-mist-200)" }}>
+        <div className="p-4 border-t border-[var(--eh-mist-200)] bg-[var(--eh-surface)]">
           <Link
             href="/danger-mode"
-            className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-transform active:scale-[0.98]"
+            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold transition-all duration-300 active:scale-[0.98] animate-pulse hover:animate-none hover:shadow-[0_0_20px_rgba(226,114,114,0.4)]"
             style={{ background: "var(--eh-danger-600)", color: "var(--eh-surface, #fff)" }}
             onClick={onClose}
           >

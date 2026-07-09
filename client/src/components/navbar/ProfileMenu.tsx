@@ -4,8 +4,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut, User, Settings, ChevronDown } from "lucide-react";
-import { useAuth } from "@/lib/authStub";
-// TODO: replace with Kamal's real useAuth when AuthContext is wired
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProfileMenu() {
   const { user, signOut } = useAuth();
@@ -14,7 +13,9 @@ export default function ProfileMenu() {
   const pathname = usePathname();
 
   // Close on route change
-  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   // Close on outside click
   useEffect(() => {
@@ -25,8 +26,13 @@ export default function ProfileMenu() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const initials = user?.displayName
-    ? user.displayName.split(" ").map((p) => p[0]).join("").toUpperCase().slice(0, 2)
+  const initials = user?.name
+    ? user.name
+        .split(" ")
+        .map((p: string) => p[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
     : "U";
 
   return (
@@ -47,7 +53,7 @@ export default function ProfileMenu() {
           {initials}
         </span>
         <span className="hidden sm:block text-sm font-medium" style={{ color: "var(--eh-ink-900)" }}>
-          {user?.displayName ?? "Account"}
+          {user?.name ?? "Account"}
         </span>
         <ChevronDown
           size={14}
@@ -68,7 +74,7 @@ export default function ProfileMenu() {
         >
           <div className="px-4 py-3" style={{ borderBottom: "1px solid var(--eh-mist-200)" }}>
             <p className="text-sm font-semibold truncate" style={{ color: "var(--eh-ink-900)" }}>
-              {user?.displayName ?? "User"}
+              {user?.name ?? "User"}
             </p>
             <p className="text-xs truncate" style={{ color: "var(--eh-ink-600)" }}>
               {user?.email ?? ""}

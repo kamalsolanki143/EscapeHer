@@ -71,7 +71,7 @@ export default function EmergencyPage() {
   // Use real session data; fall back to demo data for local dev
   const demoSession = {
     sessionId: session?.sessionId ?? "demo-001",
-    startedAt: session?.startedAt ?? new Date(),
+    startedAt: session?.startedAt ?? new Date("2026-07-08T22:14:03.000Z"),
     alertLevel: session?.alertLevel ?? 1,
     heartbeatStatus: session?.heartbeatStatus ?? "monitoring",
     latitude: session?.latitude ?? 28.6139,

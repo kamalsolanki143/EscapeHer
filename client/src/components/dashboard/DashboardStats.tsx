@@ -21,27 +21,28 @@ interface StatCardProps {
 function StatCard({ icon: Icon, label, value, sub, accent = "var(--eh-teal-500)" }: StatCardProps) {
   return (
     <div
-      className="rounded-2xl p-4 flex flex-col gap-3"
-      style={{ background: "var(--eh-surface, #fff)", border: "1px solid var(--eh-mist-200)" }}
+      className="rounded-2xl p-5 flex flex-col gap-4 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] hover:border-[var(--eh-teal-500)]/25 hover:shadow-sm transition-all duration-300"
     >
-      <span
-        className="flex h-9 w-9 items-center justify-center rounded-full"
-        style={{ background: "var(--eh-teal-100)" }}
-      >
-        <Icon size={18} color={accent} />
-      </span>
+      <div className="flex items-center justify-between">
+        <span
+          className="flex h-10 w-10 items-center justify-center rounded-xl shadow-inner"
+          style={{ background: "var(--eh-teal-100)" }}
+        >
+          <Icon size={20} color={accent} />
+        </span>
+      </div>
       <div>
         <p
-          className="text-2xl font-bold"
+          className="text-3xl font-extrabold tracking-tight"
           style={{ color: "var(--eh-ink-900)", fontFamily: "var(--eh-font-display)" }}
         >
           {value}
         </p>
-        <p className="text-xs font-medium mt-0.5" style={{ color: "var(--eh-ink-600)" }}>
+        <p className="text-xs font-bold uppercase tracking-wider mt-1 text-[var(--eh-ink-600)]">
           {label}
         </p>
         {sub && (
-          <p className="text-[11px] mt-1" style={{ color: "var(--eh-ink-600)", fontFamily: "var(--eh-font-mono)" }}>
+          <p className="text-[10px] mt-1.5 font-mono tracking-tight text-[var(--eh-ink-600)]">
             {sub}
           </p>
         )}

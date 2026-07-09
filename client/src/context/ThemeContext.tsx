@@ -26,26 +26,30 @@ interface ThemeProviderProps {
 }
 
 function getSystemTheme(): "dark" | "light" {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function getStoredTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   const stored = localStorage.getItem(THEME_KEY);
   if (stored === "dark" || stored === "light" || stored === "system") return stored;
-  return "dark";
+  return "light";
 }
 
-export function ThemeProvider({ children, defaultTheme = "dark" }: ThemeProviderProps) {
+export function ThemeProvider({ children, defaultTheme = "light" }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("dark");
+  const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("light");
 
   /* ── Initialize from storage ─────────────────────────────────────── */
   useEffect(() => {
     const stored = getStoredTheme();
-    setThemeState(stored);
-    setResolvedTheme(stored === "system" ? getSystemTheme() : stored);
+    const resolved = stored === "system" ? getSystemTheme() : stored;
+    const timer = setTimeout(() => {
+      setThemeState(stored);
+      setResolvedTheme(resolved);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   /* ── Apply class to <html> whenever theme changes ────────────────── */
@@ -53,6 +57,7 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: ThemeProvider
     const root = document.documentElement;
     root.classList.remove("dark", "light");
     root.classList.add(resolvedTheme);
+    root.setAttribute("data-theme", resolvedTheme);
   }, [resolvedTheme]);
 
   /* ── Listen for OS-level theme changes when mode is "system" ─────── */

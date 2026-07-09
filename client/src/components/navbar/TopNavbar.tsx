@@ -18,11 +18,7 @@ export default function TopNavbar({
 }: TopNavbarProps) {
   return (
     <header
-      className="sticky top-0 z-30 flex items-center gap-3 px-4 py-3"
-      style={{
-        background: "var(--eh-surface, #fff)",
-        borderBottom: "1px solid var(--eh-mist-200)",
-      }}
+      className="sticky top-0 z-30 flex items-center gap-3 px-4 py-3 border-b border-[var(--eh-mist-200)] bg-[var(--eh-surface)]/85 backdrop-blur-md"
     >
       {/* Hamburger — mobile only */}
       <button

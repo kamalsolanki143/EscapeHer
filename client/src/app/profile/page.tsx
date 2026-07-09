@@ -20,7 +20,7 @@ export default function ProfilePage() {
 
   return (
     <DashboardLayout>
-      <div className="px-4 py-6 space-y-8 max-w-2xl mx-auto eh-page">
+      <div className="px-4 md:px-8 py-8 space-y-8 max-w-4xl mx-auto eh-page">
         {/* Profile section */}
         <section aria-labelledby="profile-heading">
           <PageHeader
@@ -29,8 +29,7 @@ export default function ProfilePage() {
             subtitle="Manage your personal information."
           />
           <div
-            className="mt-5 rounded-2xl p-5"
-            style={{ background: "var(--eh-surface, #fff)", border: "1px solid var(--eh-mist-200)" }}
+            className="mt-5 rounded-2xl p-6 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] shadow-sm"
           >
             <ProfileForm />
           </div>
@@ -46,11 +45,7 @@ export default function ProfilePage() {
               <button
                 type="button"
                 onClick={() => setShowAddContact(true)}
-                className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-colors active:scale-[0.98]"
-                style={{
-                  background: "var(--eh-teal-500)",
-                  color: "var(--eh-surface, #fff)",
-                }}
+                className="flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-bold bg-[var(--eh-teal-500)] text-[var(--eh-surface)] hover:bg-[var(--eh-teal-500)]/95 shadow-sm transition-all active:scale-[0.97]"
               >
                 <Plus size={14} />
                 Add

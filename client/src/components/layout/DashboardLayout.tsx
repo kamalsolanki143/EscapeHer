@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import Loader from "@/components/common/Loader";
 import TopNavbar from "@/components/navbar/TopNavbar";
 import AppSidebar from "@/components/sidebar/AppSidebar";
 
@@ -10,11 +13,22 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) {
+    return <Loader fullScreen label="Authenticating session…" />;
+  }
 
   return (
     <div
-      className="flex h-dvh"
-      style={{ background: "var(--eh-mist-50)" }}
+      className="flex h-dvh border-r border-[var(--eh-mist-200)] bg-[var(--eh-surface)]"
     >
       {/* Sidebar */}
       <AppSidebar

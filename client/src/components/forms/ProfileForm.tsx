@@ -2,13 +2,12 @@
 
 import React, { useState } from "react";
 import { User, Mail, Phone, Camera, Loader2 } from "lucide-react";
-import { useAuth } from "@/lib/authStub";
-// TODO: replace with Kamal's real useAuth + PATCH /api/profile from Krrish
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProfileForm() {
   const { user } = useAuth();
-  const [displayName, setDisplayName] = useState(user?.displayName ?? "");
-  const [phone, setPhone] = useState(user?.phoneNumber ?? "");
+  const [displayName, setDisplayName] = useState(user?.name ?? "");
+  const [phone, setPhone] = useState(user?.phone ?? "");
   const [email] = useState(user?.email ?? ""); // email is read-only (Firebase Auth)
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);

@@ -86,11 +86,7 @@ export default function QuickActions({ className = "" }: QuickActionsProps) {
       {/* Primary — Danger Mode: full-width, prominent */}
       <Link
         href={primary.href}
-        className="flex items-center gap-4 rounded-2xl p-4 transition-transform active:scale-[0.98]"
-        style={{
-          background: "var(--eh-surface, #fff)",
-          border: `2px solid var(--eh-danger-600)`,
-        }}
+        className="flex items-center gap-4 rounded-2xl p-4 border-2 border-[var(--eh-danger-600)] bg-[var(--eh-surface)] hover:bg-[var(--eh-danger-100)]/10 hover:shadow-[0_0_25px_rgba(226,114,114,0.08)] transition-all duration-300 active:scale-[0.98]"
       >
         <span
           className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
@@ -120,11 +116,7 @@ export default function QuickActions({ className = "" }: QuickActionsProps) {
           <Link
             key={label}
             href={href}
-            className="flex flex-col gap-3 rounded-2xl p-4 transition-transform active:scale-[0.98]"
-            style={{
-              background: "var(--eh-surface, #fff)",
-              border: "1px solid var(--eh-mist-200)",
-            }}
+            className="flex flex-col gap-3 rounded-2xl p-4 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] hover:border-[var(--eh-teal-500)]/40 hover:bg-[var(--eh-teal-100)]/5 hover:shadow-[0_0_20px_rgba(63,191,174,0.05)] transition-all duration-300 active:scale-[0.98]"
           >
             <span
               className="flex h-10 w-10 items-center justify-center rounded-full"

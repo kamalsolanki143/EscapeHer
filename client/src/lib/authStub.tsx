@@ -9,6 +9,8 @@
  */
 
 import React, { createContext, useContext, useState } from "react";
+import { removeToken, removeStoredUser } from "@/lib/helpers";
+import { disconnectSocket } from "@/lib/socket";
 
 export interface User {
   uid: string;
@@ -31,7 +33,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 /** Stub provider — simulates a signed-in user for local development. */
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
-  const [user] = useState<User | null>({
+  const [user, setUser] = useState<User | null>({
     uid: "stub-uid-001",
     email: "user@example.com",
     displayName: "Muskan",
@@ -43,14 +45,29 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     user,
     isInitializing: false,
     isAuthenticated: user !== null,
-    signIn: async () => {
-      console.warn("[AuthContext stub] signIn called — replace with Kamal's impl");
+    signIn: async (email: string, password: string) => {
+      setUser({
+        uid: "stub-uid-001",
+        email: email || "user@example.com",
+        displayName: "Muskan",
+        photoURL: null,
+        phoneNumber: null,
+      });
     },
-    signUp: async () => {
-      console.warn("[AuthContext stub] signUp called — replace with Kamal's impl");
+    signUp: async (email: string, password: string, name: string) => {
+      setUser({
+        uid: "stub-uid-001",
+        email: email || "user@example.com",
+        displayName: name || "Muskan",
+        photoURL: null,
+        phoneNumber: null,
+      });
     },
     signOut: async () => {
-      console.warn("[AuthContext stub] signOut called — replace with Kamal's impl");
+      setUser(null);
+      removeToken();
+      removeStoredUser();
+      disconnectSocket();
     },
   };
 

@@ -23,6 +23,16 @@ function Step({ number, icon, title, description, index }: StepProps) {
       transition={{ duration: 0.6, type: "spring" }}
       className="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative"
     >
+      <style>{`
+        @keyframes eh-scan {
+          0%, 100% { top: 0%; }
+          50% { top: 100%; }
+        }
+        .scanner-beam {
+          animation: eh-scan 3s ease-in-out infinite;
+        }
+      `}</style>
+
       <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left order-2 md:order-1">
         <span className="text-sm font-bold text-red-500 tracking-widest uppercase mb-2">
           Step {number}
@@ -32,10 +42,14 @@ function Step({ number, icon, title, description, index }: StepProps) {
       </div>
 
       <div className="relative flex items-center justify-center order-1 md:order-2">
-        <div className="absolute size-24 rounded-full bg-red-600/10 blur-xl pointer-events-none" />
-        <div className="size-20 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-red-500 z-10 relative">
+        <div className="absolute size-28 rounded-full bg-red-600/10 blur-xl pointer-events-none" />
+        {/* Pulsing outer guard ring */}
+        <div className="absolute -inset-2 rounded-3xl border border-red-500/10 animate-pulse pointer-events-none" />
+        <div className="size-20 rounded-2xl bg-zinc-950/80 border border-zinc-800/80 flex items-center justify-center text-red-500 z-10 relative overflow-hidden backdrop-blur-sm">
+          {/* Laser scanning beam */}
+          <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-red-500/80 to-transparent scanner-beam pointer-events-none" />
           {icon}
-          <div className="absolute -top-3 -right-3 size-8 rounded-full bg-red-600 flex items-center justify-center text-xs font-black text-white shadow-lg border-2 border-black">
+          <div className="absolute -top-2 -right-2 size-7 rounded-full bg-red-600 flex items-center justify-center text-[10px] font-black text-white shadow-[0_0_12px_rgba(239,68,68,0.4)] border-2 border-zinc-950">
             {number}
           </div>
         </div>

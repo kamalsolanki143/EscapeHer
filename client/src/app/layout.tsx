@@ -1,9 +1,11 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import React from "react";
 import { Manrope, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { ThemeProvider as ThemeContextProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 /* ─── Fonts ────────────────────────────────────────────────────────────────── */
 const manrope = Manrope({
@@ -42,10 +44,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${inter.variable} ${ibmPlexMono.variable} h-full antialiased dark`}
+      className={`${manrope.variable} ${inter.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-black text-zinc-100 font-sans selection:bg-rose-500 selection:text-white">
-        {children}
+      <body 
+        className="min-h-full flex flex-col font-sans selection:bg-rose-500 selection:text-white"
+        suppressHydrationWarning
+      >
+        <QueryProvider>
+          <ThemeContextProvider>
+            <ThemeProvider>
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+            </ThemeProvider>
+          </ThemeContextProvider>
+        </QueryProvider>
       </body>
     </html>
   );

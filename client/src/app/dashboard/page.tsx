@@ -8,8 +8,7 @@ import QuickActions from "@/components/dashboard/QuickActions";
 import HeartbeatStatus from "@/components/emergency/HeartbeatStatus";
 import EmergencyChart from "@/components/charts/EmergencyChart";
 import ContactList from "@/components/contacts/ContactList";
-import { useAuth } from "@/lib/authStub";
-// TODO: replace with Kamal's real useAuth + real data from Krrish's API
+import { useAuth } from "@/hooks/useAuth";
 
 // Demo data — replace with API-fetched data via React Query
 const DEMO_CHART_DATA = [
@@ -30,90 +29,104 @@ const DEMO_CONTACTS = [
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const firstName = user?.displayName?.split(" ")[0] ?? "there";
-  const currentHour = new Date().getHours();
-  const greeting =
-    currentHour < 12 ? "Good morning" : currentHour < 17 ? "Good afternoon" : "Good evening";
+  const firstName = user?.name?.split(" ")[0] ?? "there";
+  const [greeting, setGreeting] = React.useState("Hello");
+
+  React.useEffect(() => {
+    const currentHour = new Date().getHours();
+    const resolved =
+      currentHour < 12 ? "Good morning" : currentHour < 17 ? "Good afternoon" : "Good evening";
+    const timer = setTimeout(() => {
+      setGreeting(resolved);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <DashboardLayout>
-      <div className="px-4 py-6 space-y-6 max-w-2xl mx-auto eh-page">
+      <div className="px-4 md:px-8 py-8 space-y-6 max-w-6xl mx-auto eh-page">
         {/* Greeting header */}
         <PageHeader
           title={`${greeting}, ${firstName} 👋`}
           subtitle="Your safety dashboard — everything in one place."
         />
 
-        {/* Heartbeat status — shows session monitor state */}
-        <HeartbeatStatus
-          status="monitoring"
-          intervalSeconds={30}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Column: Heartbeat, Charts, Contacts */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Heartbeat status — shows session monitor state */}
+            <HeartbeatStatus
+              status="monitoring"
+              intervalSeconds={30}
+            />
 
-        {/* Quick actions */}
-        <section aria-labelledby="quick-actions-heading">
-          <h2
-            id="quick-actions-heading"
-            className="text-xs font-semibold uppercase tracking-wide mb-3"
-            style={{ color: "var(--eh-ink-600)" }}
-          >
-            Quick Actions
-          </h2>
-          <QuickActions />
-        </section>
+            {/* Emergency chart — wrapped from UIKit */}
+            <section aria-labelledby="chart-heading">
+              <h2
+                id="chart-heading"
+                className="text-xs font-semibold uppercase tracking-wide mb-3"
+                style={{ color: "var(--eh-ink-600)" }}
+              >
+                7-Day Incident Overview
+              </h2>
+              <div
+                className="rounded-2xl p-4 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] shadow-sm"
+              >
+                <EmergencyChart data={DEMO_CHART_DATA} height={200} />
+              </div>
+            </section>
 
-        {/* Stats */}
-        <section aria-labelledby="stats-heading">
-          <h2
-            id="stats-heading"
-            className="text-xs font-semibold uppercase tracking-wide mb-3"
-            style={{ color: "var(--eh-ink-600)" }}
-          >
-            Your Safety Stats
-          </h2>
-          <DashboardStats
-            stats={{
-              totalIncidents: 10,
-              resolvedSafely: 9,
-              escalated: 1,
-              heartbeatUptime: 98,
-            }}
-          />
-        </section>
-
-        {/* Emergency chart — wrapped from UIKit */}
-        <section aria-labelledby="chart-heading">
-          <h2
-            id="chart-heading"
-            className="text-xs font-semibold uppercase tracking-wide mb-3"
-            style={{ color: "var(--eh-ink-600)" }}
-          >
-            7-Day Incident Overview
-          </h2>
-          <div
-            className="rounded-2xl p-4"
-            style={{ background: "var(--eh-surface, #fff)", border: "1px solid var(--eh-mist-200)" }}
-          >
-            <EmergencyChart data={DEMO_CHART_DATA} height={200} />
+            {/* Trusted contacts — wrapped from UIKit */}
+            <section aria-labelledby="contacts-heading">
+              <h2
+                id="contacts-heading"
+                className="text-xs font-semibold uppercase tracking-wide mb-3"
+                style={{ color: "var(--eh-ink-600)" }}
+              >
+                Trusted Contacts
+              </h2>
+              <ContactList
+                contacts={DEMO_CONTACTS}
+                onCall={(id) => console.log("[dashboard] call contact", id)}
+                onMessage={(id) => console.log("[dashboard] message contact", id)}
+              />
+            </section>
           </div>
-        </section>
 
-        {/* Trusted contacts — wrapped from UIKit */}
-        <section aria-labelledby="contacts-heading">
-          <h2
-            id="contacts-heading"
-            className="text-xs font-semibold uppercase tracking-wide mb-3"
-            style={{ color: "var(--eh-ink-600)" }}
-          >
-            Trusted Contacts
-          </h2>
-          <ContactList
-            contacts={DEMO_CONTACTS}
-            onCall={(id) => console.log("[dashboard] call contact", id)}
-            onMessage={(id) => console.log("[dashboard] message contact", id)}
-          />
-          {/* TODO: wire to Krrish's GET /api/contacts */}
-        </section>
+          {/* Right Column: Actions & Stats */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Quick actions */}
+            <section aria-labelledby="quick-actions-heading">
+              <h2
+                id="quick-actions-heading"
+                className="text-xs font-semibold uppercase tracking-wide mb-3"
+                style={{ color: "var(--eh-ink-600)" }}
+              >
+                Quick Actions
+              </h2>
+              <QuickActions />
+            </section>
+
+            {/* Stats */}
+            <section aria-labelledby="stats-heading">
+              <h2
+                id="stats-heading"
+                className="text-xs font-semibold uppercase tracking-wide mb-3"
+                style={{ color: "var(--eh-ink-600)" }}
+              >
+                Your Safety Stats
+              </h2>
+              <DashboardStats
+                stats={{
+                  totalIncidents: 10,
+                  resolvedSafely: 9,
+                  escalated: 1,
+                  heartbeatUptime: 98,
+                }}
+              />
+            </section>
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );

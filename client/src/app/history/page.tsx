@@ -88,7 +88,7 @@ export default function HistoryPage() {
 
   return (
     <DashboardLayout>
-      <div className="px-4 py-6 space-y-5 max-w-2xl mx-auto eh-page">
+      <div className="px-4 md:px-8 py-8 space-y-8 max-w-4xl mx-auto eh-page">
         <PageHeader
           title="Incident History"
           subtitle="Full timestamped log of all emergency sessions."
@@ -96,22 +96,17 @@ export default function HistoryPage() {
             <button
               type="button"
               aria-label="Export incident log"
-              className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold transition-colors hover:bg-[var(--eh-mist-200)] active:scale-[0.98]"
-              style={{
-                background: "var(--eh-surface, #fff)",
-                border: "1px solid var(--eh-mist-200)",
-                color: "var(--eh-ink-900)",
-              }}
+              className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] text-[var(--eh-ink-900)] hover:border-[var(--eh-teal-500)]/30 hover:bg-[var(--eh-teal-100)]/10 shadow-sm transition-all duration-200 active:scale-[0.97]"
             >
-              <Download size={13} />
-              Export
+              <Download size={14} className="text-[var(--eh-teal-700)]" />
+              <span>Export Log</span>
             </button>
           }
         />
 
         {/* Filter bar */}
         <div
-          className="flex items-center gap-2 overflow-x-auto pb-1"
+          className="flex items-center gap-2.5 overflow-x-auto pb-1"
           role="group"
           aria-label="Filter incident events"
         >
@@ -123,12 +118,11 @@ export default function HistoryPage() {
                 key={value}
                 type="button"
                 onClick={() => setFilter(value)}
-                className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-colors"
-                style={{
-                  background: active ? "var(--eh-teal-500)" : "var(--eh-surface, #fff)",
-                  color: active ? "var(--eh-surface, #fff)" : "var(--eh-ink-600)",
-                  border: "1px solid var(--eh-mist-200)",
-                }}
+                className={`shrink-0 rounded-full px-4.5 py-2 text-xs font-semibold border transition-all duration-200 active:scale-95 ${
+                  active 
+                    ? "bg-[var(--eh-teal-500)] text-[var(--eh-surface)] border-[var(--eh-teal-500)] shadow-sm" 
+                    : "bg-[var(--eh-surface)] text-[var(--eh-ink-600)] border-[var(--eh-mist-200)] hover:text-[var(--eh-teal-700)] hover:border-[var(--eh-teal-500)]/30"
+                }`}
               >
                 {label}
               </button>
@@ -138,8 +132,7 @@ export default function HistoryPage() {
 
         {/* Timeline — wrapped from UIKit */}
         <div
-          className="rounded-2xl p-5"
-          style={{ background: "var(--eh-surface, #fff)", border: "1px solid var(--eh-mist-200)" }}
+          className="rounded-3xl p-6 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] shadow-sm hover:border-[var(--eh-teal-500)]/10 transition-colors duration-300"
         >
           {filteredEvents.length > 0 ? (
             <IncidentTimeline events={filteredEvents} />
@@ -152,13 +145,12 @@ export default function HistoryPage() {
 
         {/* AI Summary placeholder — rendered by Kamal */}
         <div
-          className="rounded-2xl p-4"
-          style={{ background: "var(--eh-surface, #fff)", border: "1px solid var(--eh-mist-200)" }}
+          className="rounded-3xl p-6 border border-[var(--eh-mist-200)] bg-[var(--eh-surface)] shadow-sm hover:border-[var(--eh-teal-500)]/15 transition-colors duration-300"
         >
-          <p className="text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: "var(--eh-teal-700)" }}>
+          <p className="text-xs font-bold uppercase tracking-wider mb-2 text-[var(--eh-teal-700)]">
             AI Evidence Summary
           </p>
-          <p className="text-sm" style={{ color: "var(--eh-ink-600)" }}>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--eh-ink-600)" }}>
             {/* TODO: render Kamal's Gemini AI summary output here */}
             AI-generated evidence summary will appear here once the session ends.
           </p>

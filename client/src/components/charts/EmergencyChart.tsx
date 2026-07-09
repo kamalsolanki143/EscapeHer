@@ -45,6 +45,20 @@ function ChartTooltip({ active, payload, label }: any) {
 }
 
 export default function EmergencyChart({ data, height = 240, className = "" }: EmergencyChartProps) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div 
+        style={{ width: "100%", height, background: "var(--eh-mist-50)" }} 
+        className="animate-pulse rounded-2xl"
+      />
+    );
+  }
+
   return (
     <div className={className} style={{ width: "100%", height }}>
       <ResponsiveContainer width="100%" height="100%">
